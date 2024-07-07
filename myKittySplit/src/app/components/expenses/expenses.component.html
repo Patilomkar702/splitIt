@@ -1,0 +1,80 @@
+<p class="lead">
+  Add Expenses 
+</p>  
+<ng-container *ngIf="showAddMemberBox==false" >
+
+  <div class="table-responsive">
+    <table class="table table-striped text-center">
+        <thead class="thead-dark">
+          <tr >
+            <th scope="col">#</th>
+            <th scope="col">Expense</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Paid By</th>
+            <th scope="col">Incudes</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of expenses;index as i">
+            <th scope="row">{{i+1}}</th>
+            <th scope="row">{{item.title}}</th>
+            <th scope="row">{{item.amount}}</th>
+            <td>{{kittsplitSer.getMemberByID(item.payeeId)?.name}}</td>
+            <td class="text-primary">{{kittsplitSer.getIncluedMembersList(item.includedMembersID)}}</td>
+            <th scope="row" class="text-danger"><button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteExpense(i)">Delete</button></th>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+   
+  <button type="button" class="btn btn-success btn-lg btn-block" (click)="showAddMemberBox=!showAddMemberBox">Add</button>
+  <button type="button" class="btn btn-primary btn-lg btn-block" routerLink="../total">Calculate</button>
+</ng-container>
+<ng-container *ngIf="showAddMemberBox"> 
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Expense For : </span>
+        </div>
+        <input type="text" class="form-control" placeholder="Tea and Cofee" aria-label="Tea and Cofee" aria-describedby="basic-addon1" #expense>
+    </div>
+    <div class="input-group mb-3">
+        <label>Paid By : </label>
+        <select class="form-select form-select-lg ml-2" aria-label="Default select example" #payee>
+            <ng-container *ngFor="let memeber of members">
+                <option [value]="memeber.id">{{memeber.name}}</option>
+            </ng-container>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Amount : </span>
+        </div>
+        <input type="number" placeholder="100" class="form-control" aria-label="Amount (to the nearest rupee)" #amt>
+        <div class="input-group-append" >
+          <span class="input-group-text"> $ </span>
+        </div>
+    </div>
+ 
+    <div class="mb-3">
+        <ul class="list-group">
+            <li class="list-group-item active">People Inclued in Expense</li>
+           
+            <li class="list-group-item d-flex justify-content-around align-items-center" *ngFor="let item of members">
+                <label for="members list">{{item.name}}</label>
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <input type="checkbox" aria-label="Checkbox for following text input" (change)="includedMembers(item)" [checked]="item.isIncludedExpense">
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="input-group mb-3">
+        <button type="button" class="btn btn-secondary btn-lg" (click)="addExpense(expense.value,amt.value,payee.value)">Add</button>
+    </div>  
+    <div class="alert alert-danger" role="alert" [class]="{'d-none':!showErrror}" >
+      Please Enter all input fields and make sure atleast one people included in expense
+    </div>
+</ng-container>

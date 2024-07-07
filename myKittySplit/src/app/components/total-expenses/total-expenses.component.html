@@ -1,0 +1,57 @@
+<p class="lead font-weight-bold ">
+   Cost breakup : 
+</p>
+<div class="alert alert-dark" role="alert">
+    <button type="button" class="btn btn-dark btn-sm">
+        People <span class="badge badge-light">{{members.length}}</span>
+      </button>
+    <span class="badge badge-secondary m-1" *ngFor="let member of members">{{member.name}}</span>
+</div> 
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Expense</th>
+            <th scope="col">Paid By</th>
+            <th scope="col">Includes</th>
+            <th scope="col">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let expense of expenses">
+            <th scope="row">  {{expense.title}} </th>
+            <td>{{kittySer.getMemberByID(expense.payeeId)?.name}}</td>
+            <td>{{kittySer.getIncluedMembersList(expense.includedMembersID)}}</td>
+            <td>{{expense.amount}}</td>
+          </tr>
+         
+        </tbody>
+      </table>
+      
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Total </th>
+            <th scope="col"></th> 
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">{{totalCost}}</th>
+          </tr>
+        </thead>
+      </table>
+</div>
+<p class="lead font-weight-bold mt-3">
+   Settle all your debts : 
+</p>
+<ul class="list-group text-center">
+    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let ele of kittySer.settleMentList">
+        {{ele.name}} gives {{ele.amount | currency:'INR'}} to {{ele.paidTo}}
+    </li>
+
+</ul>

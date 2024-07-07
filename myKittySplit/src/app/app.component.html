@@ -1,0 +1,20 @@
+<div>
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a routerLink="member" class="navbar-brand">Split It</a>
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLink="member" class="nav-link" routerLinkActive="true">Step 1</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link">></a>
+      </li> 
+      <li class="nav-item">
+        <a routerLink="expenses" class="nav-link">Step 2</a>
+      </li>
+    </div>
+  </nav>
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+  
+</div>

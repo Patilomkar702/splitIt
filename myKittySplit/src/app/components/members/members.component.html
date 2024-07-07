@@ -1,0 +1,64 @@
+<p class="lead">
+  Add Participants 
+</p>
+<ng-container *ngIf="showAddMemberBox==false" >
+
+   <div class="table-responsive">
+    <table class="table table-striped text-center">
+        <thead class="thead-dark">
+          <tr >
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of members;index as i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{item.name}}</td>
+            <td scope="row"><button type="button" class="btn btn-outline-danger btn-sm" (click)="delMember(item.id)">X</button></td>
+          </tr>
+        </tbody>
+    </table>
+   </div>
+   <button type="button" class="btn btn-success btn-lg btn-block" (click)="showAddMemberBox=!showAddMemberBox">Add More</button>
+   <button type="button" class="btn btn-primary btn-lg btn-block" routerLink="../expenses">Next</button>
+</ng-container>
+<ng-container *ngIf="showAddMemberBox"> 
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Name : </span>
+        </div>
+        <input type="text" class="form-control" placeholder="Jack" aria-label="Username" aria-describedby="basic-addon1" #name (keydown)="validateName(name.value)">
+    </div>
+    <div class="mb-3">
+       <div><button type="button" class="btn btn-success btn-lg btn-block" [disabled]="isAddBtnDisabled" (click)="addMember(name.value)">Add</button></div>
+    </div>
+   
+</ng-container>
+
+
+<!-- Button trigger modal -->
+<button type="button  " class="btn btn-primary invisible" data-toggle="modal" data-target="#exampleModal" id="modalBtn">
+    Launch demo modal
+</button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger" id="exampleModalLabel">Error </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            {{message}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" routerLink="../expenses" >Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
